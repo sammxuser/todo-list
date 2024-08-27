@@ -1,0 +1,156 @@
+* {
+  font-family: 'Epilogue', sans-serif;
+  font-size: 0.85rem;
+}
+.logo {
+  font-size: 1.3rem;
+}
+
+nav,
+.cta-btns,
+.menu-items {
+  display: flex;
+  align-items: center;
+}
+
+li {
+  list-style: none;
+}
+nav {
+  margin: 0 1.5rem 1.5rem 1.5rem;
+  justify-content: space-between;
+}
+.logos-section {
+  display: flex;
+}
+.menu-items li,
+.cta-btns li {
+  font-size: 0.7rem;
+  margin-right: 1rem;
+  color: hsl(0, 0%, 41%);
+}
+.cta-btns li:nth-last-child(1) {
+  border: 1px solid gray;
+  padding: 0.2rem 0.7rem;
+  border-radius: 0.3rem;
+}
+
+/* Client logos */
+.clients-logos img {
+  width: 5rem;
+  margin-right: 1rem;
+}
+.clients-logos {
+  margin-top: 4rem;
+}
+.clients-logos img:nth-child(2) {
+  width: 3rem;
+}
+
+/* main */
+main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  height: 70vh;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8rem;
+}
+main h1 {
+  font-size: 3rem;
+}
+main p {
+  font-size: 0.7rem;
+  width: 18rem;
+  color: hsl(0, 0%, 41%);
+  line-height: 0.9rem;
+}
+main button {
+  background-color: hsl(0, 0%, 8%);
+  color: #fff;
+  border: none;
+  font-size: 0.7rem;
+  padding: 0.6rem 1rem;
+  border-radius: 0.4rem;
+  margin-top: 1rem;
+}
+#text-side {
+  margin-top: 3rem;
+}
+
+/* Hero image */
+.img-side img {
+  width: 20rem;
+}
+
+/* Cater for responsiveness */
+/* Responsive */
+@media (min-width: 300px) and (max-width: 480px) {
+  * {
+    font-size: 1rem;
+  }
+
+  body {
+    height: 100vh;
+    width: 100vw;
+    overflow-y: hidden;
+    overflow-x: hidden;
+  }
+
+  nav {
+    margin: 0 1.5rem 0 1.5rem;
+  }
+
+  nav ul {
+    display: none;
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: 100%;
+    margin: 0 auto;
+  }
+
+  /* Clients logos */
+  .clients-logos {
+    margin-top: 2rem;
+  }
+
+  .desktop-logos {
+    display: none;
+  }
+
+  .mobile-logos {
+    display: block;
+  }
+
+  /* Images */
+  .desktop-img {
+    display: none;
+  }
+  .mobile-img {
+    display: block;
+    margin-top: 3rem;
+  }
+
+  .cta-btns,
+  .menu-items {
+    display: none;
+  }
+
+  main h1 {
+    font-size: 2.5rem;
+  }
+
+  /* Client Logos */
+  .clients-logos img {
+    width: 4.5rem;
+    margin-right: 0.8rem;
+  }
+
+  .attribution {
+    width: 13rem;
+    margin: 8rem auto 0 auto;
+    text-align: center;
+  }
+}

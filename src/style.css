@@ -1,25 +1,43 @@
 * {
   font-family: 'Epilogue', sans-serif;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
-.logo {
-  font-size: 1.3rem;
+.container {
+  display: grid;
+  grid-template-columns: 150px 2fr;
+}
+.side-bar {
+  width: 150px;
+  height: 95vh;
+  border-right: 1px solid orangered;
+}
+.side-bar h3 {
+  text-align: center;
+  background-color: beige;
+}
+.side-bar section {
+  padding-left: 4px;
+}
+.side-bar ul {
+  list-style: none;
+  padding-left: 0;
 }
 
-nav,
+.projects {
+  margin-top: 50px;
+}
+
+.logo {
+  font-size: 1.3rem;
+  text-align: center;
+}
 .cta-btns,
 .menu-items {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
-li {
-  list-style: none;
-}
-nav {
-  margin: 0 1.5rem 1.5rem 1.5rem;
-  justify-content: space-between;
-}
 .logos-section {
   display: flex;
 }
@@ -49,15 +67,19 @@ nav {
 
 /* main */
 main {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  height: 70vh;
+  /* display: grid;
+  grid-template-columns: repeat(2, 1fr); */
+  height: 95vh;
   align-items: center;
   justify-content: center;
-  margin-left: 8rem;
+  margin-left: 5px;
 }
 main h1 {
   font-size: 3rem;
+}
+main h2 {
+  font-size: 1rem;
+  text-align: left;
 }
 main p {
   font-size: 0.7rem;
@@ -74,10 +96,6 @@ main button {
   border-radius: 0.4rem;
   margin-top: 1rem;
 }
-#text-side {
-  margin-top: 3rem;
-}
-
 /* Hero image */
 .img-side img {
   width: 20rem;
@@ -95,14 +113,6 @@ main button {
     width: 100vw;
     overflow-y: hidden;
     overflow-x: hidden;
-  }
-
-  nav {
-    margin: 0 1.5rem 0 1.5rem;
-  }
-
-  nav ul {
-    display: none;
   }
 
   main {
@@ -152,5 +162,6 @@ main button {
     width: 13rem;
     margin: 8rem auto 0 auto;
     text-align: center;
+    margin-left: 350px;
   }
 }

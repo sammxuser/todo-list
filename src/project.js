@@ -1,5 +1,6 @@
 export class Project {
-  constructor(...todos) {
+  constructor(name, ...todos) {
+    this.name = name;
     this.todos = todos;
   }
 

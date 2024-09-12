@@ -11,35 +11,27 @@
         <h2 class="logo"><img src="todo-logo.png" alt="logo" /></h2>
         <section class="todos">
           <h3>Todos</h3>
+          <ul id="todos-list"></ul>
           <p>Add task</p>
-          <ul>
-            <li>Todo 1</li>
-            <li>Todo Another thing</li>
-            <li>Todo two more</li>
-          </ul>
         </section>
         <section class="projects">
           <h3>Projects</h3>
-          <p>Add project</p>
-          <ul>
-            <li>Project 1</li>
-            <li>Project 2</li>
-            <li>Project 3</li>
-            <li>Another Project</li>
-          </ul>
+          <ul id="projects-list"></ul>
+          <p>New project</p>
         </section>
       </div>
       <main>
         <section id="text-side">
           <h1>Today's Todos</h1>
-          <ul>
-            <li>Project 1</li>
+          <button id="showDialog">Add a task</button>
+          <ul id="projects-todos">
+            <!-- <li>Project 1</li>
             <ul>
               <li>Meet Bob</li>
               <li>Code a Project</li>
               <li>Go to the gym</li>
               <li>Sleep</li>
-              <li>Add a task</li>
+              <li>Add task</li>
             </ul>
             <li>Project 2</li>
             <ul>
@@ -47,13 +39,35 @@
               <li>Code a Project</li>
               <li>Go to the gym</li>
               <li>Sleep</li>
-              <li>Add a task</li>
-            </ul>
+              <li class="add-task">Add a task</li>
+            </ul> -->
           </ul>
         </section>
         <section class="img-side"></section>
       </main>
     </div>
+
+    <!-- Create a task modal form -->
+    <dialog id="createTaskDialog">
+      <form id="add-task-form">
+        <label for="project">Project</label>
+        <select id="project" name="project">
+          <option value="default">Choose ...</option>
+        </select>
+        <br />
+        <label for="task">Task: &nbsp;&nbsp;</label>
+        <input type="text" name="task" id="task" /> <br />
+        <label for="due-date">Due by</label>
+        <input type="date" name="duedate" id="duedate" /> <br />
+        <label for="priority">Priority</label>
+        <input type="number" name="priority" id="priority" min="1" max="3" />
+        <br />
+        <div>
+          <button value="cancel" formmethod="dialog">Cancel</button>
+          <button value="default" id="createBtn">Create</button>
+        </div>
+      </form>
+    </dialog>
     <div class="attribution">copyright &copy;2024</div>
   </body>
 </html>

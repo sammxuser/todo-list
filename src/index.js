@@ -45,7 +45,6 @@ const todo2 = new Todo(
 anotherProject.addTodo = todo2;
 
 allProjects.push(anotherProject);
-
 // allProjects.forEach((project) => {
 //   console.log(project.name);
 
@@ -119,15 +118,24 @@ taskForm.addEventListener('submit', function (event) {
   // form data
   const formData = new FormData(this);
   const projectName = formData.get('project');
-  const taskDescription = formData.get('task');
+  const todo = formData.get('todo');
+  const details = formData.get('details');
   const dueDate = formData.get('duedate');
   const priority = formData.get('priority');
 
-  console.log(projectName);
-  console.log(taskDescription);
-  console.log(dueDate);
-  console.log(priority);
+  const projectInProjects = findProject(projectName);
+
+  const addedTodo = [todo, details, dueDate, priority];
+  if (projectInProjects !== undefined) {
+    // if project exists
+    projectInProjects.todos.push(addedTodo);
+  }
+  console.log(projectInProjects);
 
   // Reset submitted form
   taskForm.reset();
 });
+
+function findProject(projectName) {
+  return allProjects.find((project) => project.name === projectName);
+}

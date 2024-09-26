@@ -17,7 +17,7 @@
         <section class="projects">
           <h3>Projects</h3>
           <ul id="projects-list"></ul>
-          <p>New project</p>
+          <button id="createProjectBtn">New Project</button>
         </section>
       </div>
       <main>
@@ -30,7 +30,7 @@
       </main>
     </div>
 
-    <!-- Create a task modal form -->
+    <!-- Create a todo modal form -->
     <dialog id="createTaskDialog">
       <button value="X" class="closeModal" id="closeModal">X</button>
       <form id="add-task-form">
@@ -64,6 +64,28 @@
         <div class="button-group">
           <button value="cancel" formmethod="dialog">Cancel</button>
           <button value="default" id="createBtn">Create</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Dialog for creating a new project -->
+    <dialog id="createprojectdialog">
+      <button value="X" class="closeModal" id="closeProjectModal">X</button>
+      <form id="add-project-form">
+        <div class="input-row">
+          <label for="project">Project</label>
+          <input
+            type="text"
+            name="project"
+            id="project"
+            placeholder="Project Name"
+          />
+        </div>
+        <div class="button-group">
+          <!-- <button value="cancel" formmethod="dialog">Cancel</button> -->
+          <button value="default" type="submit" id="createBtn">
+            Add Project
+          </button>
         </div>
       </form>
     </dialog>

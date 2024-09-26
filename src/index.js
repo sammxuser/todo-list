@@ -49,17 +49,6 @@ allProjects.push(anotherProject);
 //   }
 // });
 
-// select options for projects
-const select = document.getElementById('project');
-// for (let i = 0; i < allProjects.length; i++) {
-allProjects.forEach((project) => {
-  const option = document.createElement('option');
-  option.value = project.name;
-  option.textContent = project.name;
-  select.appendChild(option);
-});
-// }
-
 // Modal
 const taskButton = document.getElementById('showDialog');
 const taskDialog = document.getElementById('createTaskDialog');
@@ -74,12 +63,29 @@ closeModalBtn.addEventListener('click', () => {
 });
 
 // projects list on the side bar
-const projectList = document.getElementById('projects-list');
-allProjects.forEach((project) => {
-  const projectItem = document.createElement('li');
-  projectItem.textContent = project.name;
-  projectList.appendChild(projectItem);
-});
+function refreshProjects() {
+  // select options for projects
+  const select = document.getElementById('project');
+  select.value = '';
+  select.textContent = '';
+  // for (let i = 0; i < allProjects.length; i++) {
+  allProjects.forEach((project) => {
+    const option = document.createElement('option');
+    option.value = project.name;
+    option.textContent = project.name;
+    select.appendChild(option);
+  });
+  // }
+
+  const projectList = document.getElementById('projects-list');
+  projectList.textContent = '';
+  allProjects.forEach((project) => {
+    const projectItem = document.createElement('li');
+    projectItem.textContent = project.name;
+    projectList.appendChild(projectItem);
+  });
+}
+refreshProjects();
 
 // todo list
 function refreshTodoList() {
@@ -150,3 +156,29 @@ taskForm.addEventListener('submit', function (event) {
 function findProject(projectName) {
   return allProjects.find((project) => project.name === projectName);
 }
+
+// new project modal
+const newProjectBtn = document.getElementById('createProjectBtn');
+const projectDialog = document.getElementById('createprojectdialog');
+const closeProjectModal = document.getElementById('closeProjectModal');
+const newProjectForm = document.getElementById('add-project-form');
+
+newProjectForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  const formData = new FormData(this);
+  const newProjectName = formData.get('project');
+
+  const project = new Project(newProjectName);
+  allProjects.push(project);
+  newProjectForm.reset();
+  projectDialog.close();
+  refreshProjects();
+});
+newProjectBtn.addEventListener('click', () => {
+  projectDialog.showModal();
+});
+
+closeProjectModal.addEventListener('click', () => {
+  projectDialog.close();
+});

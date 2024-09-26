@@ -26,14 +26,10 @@ defaultProject.addTodo = anotherTodo;
 // console.log((defaultProject.removeTodo = newTodo));
 // console.log(defaultProject.todos.length);
 
-// const programming = new Project([newTodo]);
-// console.log(programming);
-// console.log('Added a new todo to the programming project');
-
+const programming = new Project('programming');
 // programming.addTodo = anotherTodo;
-// console.log(programming);
 
-const allProjects = [defaultProject];
+const allProjects = [defaultProject, programming];
 const anotherProject = new Project('project 2');
 
 const todo2 = new Todo(
@@ -45,9 +41,9 @@ const todo2 = new Todo(
 anotherProject.addTodo = todo2;
 
 allProjects.push(anotherProject);
+
 // allProjects.forEach((project) => {
 //   console.log(project.name);
-
 //   for (let i = 0; i < project.todos.length; i++) {
 //     console.log(i + 1 + '. ' + project.todos[i].title);
 //   }
@@ -67,9 +63,14 @@ allProjects.forEach((project) => {
 // Modal
 const taskButton = document.getElementById('showDialog');
 const taskDialog = document.getElementById('createTaskDialog');
+const closeModalBtn = document.getElementById('closeModal');
 
 taskButton.addEventListener('click', () => {
   taskDialog.showModal();
+});
+
+closeModalBtn.addEventListener('click', () => {
+  taskDialog.close();
 });
 
 // projects list on the side bar
@@ -81,34 +82,39 @@ allProjects.forEach((project) => {
 });
 
 // todo list
-const todoList = document.getElementById('todos-list');
-allProjects.forEach((project) => {
-  for (let i = 0; i < project.todos.length; i++) {
-    const todoItem = document.createElement('li');
-    todoItem.textContent = project.todos[i].title;
-    todoList.appendChild(todoItem);
-  }
-});
-//   }
-// }
+function refreshTodoList() {
+  const todoList = document.getElementById('todos-list');
+  todoList.textContent = '';
+  allProjects.forEach((project) => {
+    for (let i = 0; i < project.todos.length; i++) {
+      const todoItem = document.createElement('li');
+      todoItem.textContent = project.todos[i].title;
+      todoList.appendChild(todoItem);
+    }
+  });
+}
 
+refreshTodoList();
 // main page project-todos
-const projectsAndTodos = document.getElementById('projects-todos');
-allProjects.forEach((project) => {
-  const projectItem = document.createElement('li');
-  projectItem.textContent = project.name;
-  projectsAndTodos.appendChild(projectItem);
-  const todoList = document.createElement('ul');
+function refreshMainPage() {
+  const projectsAndTodos = document.getElementById('projects-todos');
+  projectsAndTodos.textContent = '';
+  allProjects.forEach((project) => {
+    const projectItem = document.createElement('li');
+    projectItem.textContent = project.name;
+    projectsAndTodos.appendChild(projectItem);
+    const todoList = document.createElement('ul');
 
-  for (let i = 0; i < project.todos.length; i++) {
-    //     console.log(i + 1 + '. ' + project.todos[i].title);
-    const todoItem = document.createElement('li');
-    todoItem.textContent = project.todos[i].title;
-    todoList.appendChild(todoItem);
-  }
-  projectItem.appendChild(todoList);
-});
-
+    for (let i = 0; i < project.todos.length; i++) {
+      //     console.log(i + 1 + '. ' + project.todos[i].title);
+      const todoItem = document.createElement('li');
+      todoItem.textContent = project.todos[i]['title'];
+      todoList.appendChild(todoItem);
+    }
+    projectItem.appendChild(todoList);
+  });
+}
+refreshMainPage();
 // Process form input
 const taskForm = document.getElementById('add-task-form');
 
@@ -125,15 +131,20 @@ taskForm.addEventListener('submit', function (event) {
 
   const projectInProjects = findProject(projectName);
 
-  const addedTodo = [todo, details, dueDate, priority];
+  const addedTodo = new Todo(todo, details, dueDate, priority);
   if (projectInProjects !== undefined) {
     // if project exists
     projectInProjects.todos.push(addedTodo);
   }
-  console.log(projectInProjects);
+  console.log(programming.todos);
 
   // Reset submitted form
   taskForm.reset();
+
+  // close Modal form
+  taskDialog.close();
+  refreshTodoList();
+  refreshMainPage();
 });
 
 function findProject(projectName) {

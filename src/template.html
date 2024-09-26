@@ -12,7 +12,7 @@
         <section class="todos">
           <h3>Todos</h3>
           <ul id="todos-list"></ul>
-          <p>Add task</p>
+          <!-- <p>Add task</p> -->
         </section>
         <section class="projects">
           <h3>Projects</h3>
@@ -24,24 +24,7 @@
         <section id="text-side">
           <h1>Today's Todos</h1>
           <button id="showDialog">Add a task</button>
-          <ul id="projects-todos">
-            <!-- <li>Project 1</li>
-            <ul>
-              <li>Meet Bob</li>
-              <li>Code a Project</li>
-              <li>Go to the gym</li>
-              <li>Sleep</li>
-              <li>Add task</li>
-            </ul>
-            <li>Project 2</li>
-            <ul>
-              <li>Meet Bob</li>
-              <li>Code a Project</li>
-              <li>Go to the gym</li>
-              <li>Sleep</li>
-              <li class="add-task">Add a task</li>
-            </ul> -->
-          </ul>
+          <ul id="projects-todos"></ul>
         </section>
         <section class="img-side"></section>
       </main>
@@ -49,6 +32,7 @@
 
     <!-- Create a task modal form -->
     <dialog id="createTaskDialog">
+      <button value="X" class="closeModal" id="closeModal">X</button>
       <form id="add-task-form">
         <div class="input-row">
           <label for="project">Project</label>

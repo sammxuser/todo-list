@@ -3,44 +3,45 @@ import './style.css';
 import { Todo } from './todo';
 import { Project } from './project';
 
-const newTodo = new Todo(
-  'code app',
-  'continue with the development of todo app',
-  '12-09-2024',
-  1
-);
+// const newTodo = new Todo(
+//   'code app',
+//   'continue with the development of todo app',
+//   '12-09-2024',
+//   1
+// );
 
-const anotherTodo = new Todo(
-  'code Odin',
-  'complete odin course work',
-  '30-09-2024',
-  2
-);
+// const anotherTodo = new Todo(
+//   'code Odin',
+//   'complete odin course work',
+//   '30-09-2024',
+//   2
+// );
 
 // default project
-const defaultProject = new Project('default');
-defaultProject.addTodo = newTodo;
+const defaultProject = new Project('General');
+// defaultProject.addTodo = newTodo;
 // console.log(defaultProject.todos.length);
-defaultProject.addTodo = anotherTodo;
+// defaultProject.addTodo = anotherTodo;
 // console.log(defaultProject.todos);
 // console.log((defaultProject.removeTodo = newTodo));
 // console.log(defaultProject.todos.length);
 
-const programming = new Project('programming');
+// const programming = new Project('programming');
 // programming.addTodo = anotherTodo;
 
-const allProjects = [defaultProject, programming];
-const anotherProject = new Project('project 2');
+// const allProjects = [defaultProject, programming];
+const allProjects = [defaultProject];
+// const anotherProject = new Project('project 2');
 
-const todo2 = new Todo(
-  'read a book',
-  'Read 5 pages of book A',
-  '30-09-2024',
-  3
-);
-anotherProject.addTodo = todo2;
+// const todo2 = new Todo(
+//   'read a book',
+//   'Read 5 pages of book A',
+//   '30-09-2024',
+//   3
+// );
+// anotherProject.addTodo = todo2;
 
-allProjects.push(anotherProject);
+// allProjects.push(anotherProject);
 
 // allProjects.forEach((project) => {
 //   console.log(project.name);
@@ -81,7 +82,9 @@ function refreshProjects() {
   projectList.textContent = '';
   allProjects.forEach((project) => {
     const projectItem = document.createElement('li');
-    projectItem.textContent = project.name;
+    const todoCount =
+      project.todos.length > 0 ? ' [' + `${project.todos.length}` + ']' : '';
+    projectItem.textContent = project.name + todoCount;
     projectList.appendChild(projectItem);
   });
 }
@@ -106,18 +109,30 @@ function refreshMainPage() {
   const projectsAndTodos = document.getElementById('projects-todos');
   projectsAndTodos.textContent = '';
   allProjects.forEach((project) => {
-    const projectItem = document.createElement('li');
-    projectItem.textContent = project.name;
-    projectsAndTodos.appendChild(projectItem);
-    const todoList = document.createElement('ul');
+    if (project.todos.length !== 0) {
+      //skip projects without any todos
+      const projectItem = document.createElement('li');
+      projectItem.textContent = project.name;
+      projectsAndTodos.appendChild(projectItem);
+      const todoList = document.createElement('ul');
 
-    for (let i = 0; i < project.todos.length; i++) {
-      //     console.log(i + 1 + '. ' + project.todos[i].title);
-      const todoItem = document.createElement('li');
-      todoItem.textContent = project.todos[i]['title'];
-      todoList.appendChild(todoItem);
+      for (let i = 0; i < project.todos.length; i++) {
+        //     console.log(i + 1 + '. ' + project.todos[i].title);
+        const todoItem = document.createElement('li');
+        // todoItem.textContent = project.todos[i]['title'];
+        todoItem.innerHTML =
+          project.todos[i]['title'] +
+          '<p>' +
+          project.todos[i]['description'] +
+          '</p>' +
+          '<b>Due date </b>' +
+          project.todos[i]['dueDate'] +
+          '  <b>Priority </b>' +
+          project.todos[i]['priority'];
+        todoList.appendChild(todoItem);
+      }
+      projectItem.appendChild(todoList);
     }
-    projectItem.appendChild(todoList);
   });
 }
 refreshMainPage();
@@ -142,7 +157,6 @@ taskForm.addEventListener('submit', function (event) {
     // if project exists
     projectInProjects.todos.push(addedTodo);
   }
-  console.log(programming.todos);
 
   // Reset submitted form
   taskForm.reset();
@@ -151,6 +165,7 @@ taskForm.addEventListener('submit', function (event) {
   taskDialog.close();
   refreshTodoList();
   refreshMainPage();
+  refreshProjects();
 });
 
 function findProject(projectName) {

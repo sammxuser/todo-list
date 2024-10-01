@@ -86,7 +86,8 @@ main p {
   color: hsl(0, 0%, 41%);
   line-height: 0.9rem;
 }
-main button {
+.todos button,
+.projects button {
   background-color: hsl(0, 0%, 8%);
   color: #fff;
   border: none;
@@ -197,5 +198,15 @@ main button {
 .closeModal {
   border: none;
   margin-left: 96%;
+  margin-bottom: 10px;
   color: red;
+}
+.projects-todos {
+  list-style: none;
+}
+
+.projects-todos li {
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
 }

@@ -95,7 +95,12 @@ main p {
   color: hsl(0, 0%, 41%);
   line-height: 0.9rem;
 }
+<<<<<<< HEAD
 .todos button {
+=======
+.todos button,
+.projects button {
+>>>>>>> 6e219e555da681e29e5757e3c640627e779d9245
   background-color: hsl(0, 0%, 8%);
   color: #fff;
   border: none;
@@ -206,5 +211,15 @@ main p {
 .closeModal {
   border: none;
   margin-left: 96%;
+  margin-bottom: 10px;
   color: red;
+}
+.projects-todos {
+  list-style: none;
+}
+
+.projects-todos li {
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
 }

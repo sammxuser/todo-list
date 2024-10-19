@@ -1,6 +1,7 @@
 * {
   font-family: 'Epilogue', sans-serif;
   font-size: 0.9rem;
+  box-sizing: border-box;
 }
 .container {
   display: grid;
@@ -75,11 +76,11 @@
 
 /* main */
 main {
-  /* display: grid;
-  grid-template-columns: repeat(2, 1fr); */
-  height: 95vh;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* height: 95vh; */
+  /* align-items: center;
+  justify-content: center; */
   margin-left: 5px;
 }
 main h1 {
@@ -89,18 +90,50 @@ main h2 {
   font-size: 1rem;
   text-align: left;
 }
-main p {
-  font-size: 0.7rem;
-  width: 18rem;
-  color: hsl(0, 0%, 41%);
-  line-height: 0.9rem;
+.main-right {
+  display: grid;
+  grid-template-rows: repeat(1fr 1fr);
+  margin-top: 15%;
+  margin-left: 5px;
+  /* border: 1px solid yellowgreen; */
 }
-<<<<<<< HEAD
-.todos button {
-=======
+.projects-todos {
+  width: 100%;
+}
+.todo-item {
+  background: #dceccf;
+  padding: 5px;
+  margin: 5px;
+}
+.todo-item-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.todo-actions button {
+  border: 0;
+  outline: 0;
+  margin: 2px;
+  color: #fff;
+  background-color: darkgray;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+
+.upcoming-todos {
+  height: 42vh;
+  background: #ececeb;
+  padding-left: 10px;
+}
+.completed-todos {
+  height: 40vh;
+  background: #f1eeee;
+  /* text-decoration: line-through; */
+  padding-left: 10px;
+}
+
 .todos button,
 .projects button {
->>>>>>> 6e219e555da681e29e5757e3c640627e779d9245
   background-color: hsl(0, 0%, 8%);
   color: #fff;
   border: none;
@@ -112,6 +145,43 @@ main p {
 /* Hero image */
 .img-side img {
   width: 20rem;
+}
+
+.input-row {
+  margin-bottom: 10px;
+}
+
+.input-row input,
+.input-row select,
+.input-row textarea {
+  width: calc(100%-10px);
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.input-row label {
+  margin-right: 25px;
+  /* display: block; */
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+.button-group {
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.closeModal {
+  border: none;
+  margin-left: 96%;
+  margin-bottom: 10px;
+  color: red;
 }
 
 /* Cater for responsiveness */
@@ -177,49 +247,4 @@ main p {
     text-align: center;
     margin-left: 350px;
   }
-}
-
-.input-row {
-  margin-bottom: 10px;
-}
-
-.input-row input,
-.input-row select {
-  width: calc(100%-10px);
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-sizing: border-box;
-  font-size: 16px;
-}
-
-.input-row label {
-  margin-right: 25px;
-  /* display: block; */
-  margin-bottom: 5px;
-  font-size: 14px;
-}
-.button-group {
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.closeModal {
-  border: none;
-  margin-left: 96%;
-  margin-bottom: 10px;
-  color: red;
-}
-.projects-todos {
-  list-style: none;
-}
-
-.projects-todos li {
-  margin-bottom: 10px;
-  position: relative;
-  padding-left: 20px;
 }

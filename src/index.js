@@ -106,32 +106,85 @@ function refreshTodoList() {
 refreshTodoList();
 // main page project-todos
 function refreshMainPage() {
-  const projectsAndTodos = document.getElementById('projects-todos');
+  // const projectsAndTodos = document.getElementById('projects-todos');
+  const projectsAndTodos = document.getElementById('todaystodos');
   projectsAndTodos.textContent = '';
+
+  const todaysHeader = document.createElement('h1');
+  todaysHeader.textContent = `Today's Todos `;
+  projectsAndTodos.appendChild(todaysHeader);
+
   allProjects.forEach((project) => {
     if (project.todos.length !== 0) {
       //skip projects without any todos
-      const projectItem = document.createElement('li');
+      const projectItem = document.createElement('h3');
       projectItem.textContent = project.name;
       projectsAndTodos.appendChild(projectItem);
-      const todoList = document.createElement('ul');
+      // const todoList = document.createElement('ul');
+      const todoItemDiv = document.createElement('div');
+      todoItemDiv.classList.add('todo-item');
 
       for (let i = 0; i < project.todos.length; i++) {
         //     console.log(i + 1 + '. ' + project.todos[i].title);
-        const todoItem = document.createElement('li');
+        // const todoItem = document.createElement('li');
+        const todoItemTitle = document.createElement('h4');
+        todoItemTitle.textContent = project.todos[i]['title'];
+        todoItemDiv.appendChild(todoItemTitle);
+
+        const todoItemDescription = document.createElement('p');
+        todoItemDescription.textContent = project.todos[i]['description'];
+        todoItemDiv.appendChild(todoItemDescription);
+
+        const todoItemBottomDiv = document.createElement('div');
+        todoItemBottomDiv.classList.add('todo-item-bottom');
+        const itemDueByDiv = document.createElement('div');
+        itemDueByDiv.classList.add('item-due-by');
+
+        const itemDueBySpanText = document.createElement('span');
+        itemDueBySpanText.textContent = `Due by ${project.todos[i]['dueDate']}`;
+        itemDueByDiv.appendChild(itemDueBySpanText);
+        todoItemBottomDiv.appendChild(itemDueByDiv);
+
+        const itemPriorityDiv = document.createElement('div');
+        itemPriorityDiv.classList.add('item-priority');
+
+        const itemPriorityText = document.createElement('span');
+        itemPriorityText.textContent = `Priority ${project.todos[i]['priority']}`;
+        itemPriorityDiv.appendChild(itemPriorityText);
+        todoItemBottomDiv.appendChild(itemPriorityDiv);
+
+        const todoActionsDiv = document.createElement('div');
+        todoActionsDiv.classList.add('todo-actions');
+
+        const itemEditButton = document.createElement('button');
+        itemEditButton.classList.add('edit-todo');
+        itemEditButton.textContent = 'Edit';
+        todoActionsDiv.appendChild(itemEditButton);
+
+        const itemCompleteButton = document.createElement('button');
+        itemCompleteButton.classList.add('complete-todo');
+        itemCompleteButton.textContent = 'Mark Completed';
+        todoActionsDiv.appendChild(itemCompleteButton);
+        todoItemBottomDiv.appendChild(todoActionsDiv);
+        todoItemDiv.appendChild(todoItemBottomDiv);
+        // const todoItemDescription = document.createElement('p');
+        // todoItemDescription.textContent = project.todos[i]['description'];
+        // projectsAndTodos.appendChild(todoItemDescription);
+
         // todoItem.textContent = project.todos[i]['title'];
-        todoItem.innerHTML =
-          project.todos[i]['title'] +
-          '<p>' +
-          project.todos[i]['description'] +
-          '</p>' +
-          '<b>Due date </b>' +
-          project.todos[i]['dueDate'] +
-          '  <b>Priority </b>' +
-          project.todos[i]['priority'];
-        todoList.appendChild(todoItem);
+        // todoItem.innerHTML =
+        //   project.todos[i]['title'] +
+        //   '<p>' +
+        //   project.todos[i]['description'] +
+        //   '</p>' +
+        //   '<b>Due date </b>' +
+        //   project.todos[i]['dueDate'] +
+        //   '  <b>Priority </b>' +
+        //   project.todos[i]['priority'];
+        // todoList.appendChild(todoItem);
       }
-      projectItem.appendChild(todoList);
+      // projectItem.appendChild(todoList);
+      projectsAndTodos.appendChild(todoItemDiv);
     }
   });
 }

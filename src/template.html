@@ -13,6 +13,7 @@
           <h3>Todos</h3>
           <ul id="todos-list"></ul>
           <!-- <p>Add task</p> -->
+          <button id="showDialog">Add a task</button>
         </section>
         <section class="projects">
           <h3>Projects</h3>
@@ -21,10 +22,20 @@
         </section>
       </div>
       <main>
-        <section id="text-side">
-          <h1>Today's Todos</h1>
-          <button id="showDialog">Add a task</button>
-          <ul id="projects-todos"></ul>
+        <section id="text-side" class="text-side">
+          <div class="todays">
+            <h1>Today's Todos</h1>
+
+            <ul id="projects-todos"></ul>
+          </div>
+          <div class="upcoming-done">
+            <div class="upcoming">
+              <h2>Upcoming todos</h2>
+            </div>
+            <div class="upcoming">
+              <h2>Completed todos</h2>
+            </div>
+          </div>
         </section>
         <section class="img-side"></section>
       </main>

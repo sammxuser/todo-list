@@ -6,6 +6,15 @@
   display: grid;
   grid-template-columns: 150px 2fr;
 }
+.text-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.upcoming-done {
+  margin-top: 10%;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
 .side-bar {
   width: 150px;
   height: 95vh;
@@ -86,7 +95,7 @@ main p {
   color: hsl(0, 0%, 41%);
   line-height: 0.9rem;
 }
-main button {
+.todos button {
   background-color: hsl(0, 0%, 8%);
   color: #fff;
   border: none;

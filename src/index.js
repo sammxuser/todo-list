@@ -97,8 +97,11 @@ function refreshTodoList() {
   allProjects.forEach((project) => {
     for (let i = 0; i < project.todos.length; i++) {
       const todoItem = document.createElement('li');
-      todoItem.textContent = project.todos[i].title;
-      todoList.appendChild(todoItem);
+      if (project.todos[i].complete === false) {
+        //skip completed todos
+        todoItem.textContent = project.todos[i].title;
+        todoList.appendChild(todoItem);
+      }
     }
   });
 }
@@ -127,68 +130,106 @@ function refreshMainPage() {
       for (let i = 0; i < project.todos.length; i++) {
         //     console.log(i + 1 + '. ' + project.todos[i].title);
         // const todoItem = document.createElement('li');
-        const todoItemTitle = document.createElement('h4');
-        todoItemTitle.textContent = project.todos[i]['title'];
-        todoItemDiv.appendChild(todoItemTitle);
+        if (project.todos[i]['complete'] === false) {
+          //Skip completed todos on the main page
+          const todoItemTitle = document.createElement('h4');
+          todoItemTitle.textContent = project.todos[i]['title'];
+          todoItemDiv.appendChild(todoItemTitle);
 
-        const todoItemDescription = document.createElement('p');
-        todoItemDescription.textContent = project.todos[i]['description'];
-        todoItemDiv.appendChild(todoItemDescription);
+          const todoItemDescription = document.createElement('p');
+          todoItemDescription.textContent = project.todos[i]['description'];
+          todoItemDiv.appendChild(todoItemDescription);
 
-        const todoItemBottomDiv = document.createElement('div');
-        todoItemBottomDiv.classList.add('todo-item-bottom');
-        const itemDueByDiv = document.createElement('div');
-        itemDueByDiv.classList.add('item-due-by');
+          const todoItemBottomDiv = document.createElement('div');
+          todoItemBottomDiv.classList.add('todo-item-bottom');
+          const itemDueByDiv = document.createElement('div');
+          itemDueByDiv.classList.add('item-due-by');
 
-        const itemDueBySpanText = document.createElement('span');
-        itemDueBySpanText.textContent = `Due by ${project.todos[i]['dueDate']}`;
-        itemDueByDiv.appendChild(itemDueBySpanText);
-        todoItemBottomDiv.appendChild(itemDueByDiv);
+          const itemDueBySpanText = document.createElement('span');
+          itemDueBySpanText.textContent = `Due by ${project.todos[i]['dueDate']}`;
+          itemDueByDiv.appendChild(itemDueBySpanText);
+          todoItemBottomDiv.appendChild(itemDueByDiv);
 
-        const itemPriorityDiv = document.createElement('div');
-        itemPriorityDiv.classList.add('item-priority');
+          const itemPriorityDiv = document.createElement('div');
+          itemPriorityDiv.classList.add('item-priority');
 
-        const itemPriorityText = document.createElement('span');
-        itemPriorityText.textContent = `Priority ${project.todos[i]['priority']}`;
-        itemPriorityDiv.appendChild(itemPriorityText);
-        todoItemBottomDiv.appendChild(itemPriorityDiv);
+          const itemPriorityText = document.createElement('span');
+          itemPriorityText.textContent = `Priority ${project.todos[i]['priority']}`;
+          itemPriorityDiv.appendChild(itemPriorityText);
+          todoItemBottomDiv.appendChild(itemPriorityDiv);
 
-        const todoActionsDiv = document.createElement('div');
-        todoActionsDiv.classList.add('todo-actions');
+          const todoActionsDiv = document.createElement('div');
+          todoActionsDiv.classList.add('todo-actions');
 
-        const itemEditButton = document.createElement('button');
-        itemEditButton.classList.add('edit-todo');
-        itemEditButton.textContent = 'Edit';
-        todoActionsDiv.appendChild(itemEditButton);
+          const itemEditButton = document.createElement('button');
+          itemEditButton.classList.add('edit-todo');
+          itemEditButton.textContent = 'Edit';
+          todoActionsDiv.appendChild(itemEditButton);
 
-        const itemCompleteButton = document.createElement('button');
-        itemCompleteButton.classList.add('complete-todo');
-        itemCompleteButton.textContent = 'Mark Completed';
-        todoActionsDiv.appendChild(itemCompleteButton);
-        todoItemBottomDiv.appendChild(todoActionsDiv);
-        todoItemDiv.appendChild(todoItemBottomDiv);
-        // const todoItemDescription = document.createElement('p');
-        // todoItemDescription.textContent = project.todos[i]['description'];
-        // projectsAndTodos.appendChild(todoItemDescription);
+          const itemCompleteButton = document.createElement('button');
+          itemCompleteButton.classList.add('complete-todo');
+          itemCompleteButton.textContent = 'Mark Completed';
+          // Mark todo as completed
+          itemCompleteButton.addEventListener('click', () => {
+            handleEdit(project.todos[i]);
+            todoItemTitle.classList.add('todo-completed');
+            todoItemDescription.classList.add('todo-completed');
+          });
+          todoActionsDiv.appendChild(itemCompleteButton);
+          todoItemBottomDiv.appendChild(todoActionsDiv);
+          todoItemDiv.appendChild(todoItemBottomDiv);
+          // const todoItemDescription = document.createElement('p');
+          // todoItemDescription.textContent = project.todos[i]['description'];
+          // projectsAndTodos.appendChild(todoItemDescription);
 
-        // todoItem.textContent = project.todos[i]['title'];
-        // todoItem.innerHTML =
-        //   project.todos[i]['title'] +
-        //   '<p>' +
-        //   project.todos[i]['description'] +
-        //   '</p>' +
-        //   '<b>Due date </b>' +
-        //   project.todos[i]['dueDate'] +
-        //   '  <b>Priority </b>' +
-        //   project.todos[i]['priority'];
-        // todoList.appendChild(todoItem);
+          // todoItem.textContent = project.todos[i]['title'];
+          // todoItem.innerHTML =
+          //   project.todos[i]['title'] +
+          //   '<p>' +
+          //   project.todos[i]['description'] +
+          //   '</p>' +
+          //   '<b>Due date </b>' +
+          //   project.todos[i]['dueDate'] +
+          //   '  <b>Priority </b>' +
+          //   project.todos[i]['priority'];
+          // todoList.appendChild(todoItem);
+          // }
+          // projectItem.appendChild(todoList);
+          projectsAndTodos.appendChild(todoItemDiv);
+        }
       }
-      // projectItem.appendChild(todoList);
-      projectsAndTodos.appendChild(todoItemDiv);
     }
   });
 }
 refreshMainPage();
+
+// handle editing a todo task
+function handleEdit(todo) {
+  todo.todoComplete = true;
+  refreshMainPage();
+  refreshTodoList();
+  refreshCompletedTodos();
+  refreshProjects();
+}
+// refresh completed todos
+function refreshCompletedTodos() {
+  const completedTodosDiv = document.getElementById('todo-completed');
+  completedTodosDiv.classList.add('todo-completed');
+  completedTodosDiv.textContent = '';
+  allProjects.forEach((project) => {
+    for (let i = 0; i < project.todos.length; i++) {
+      if (project.todos[i].complete === true) {
+        //show only completed todos
+        const todoItem = document.createElement('h4');
+        todoItem.textContent = project.todos[i].title;
+        const todoDetails = document.createElement('p');
+        todoDetails.textContent = project.todos[i].description;
+        completedTodosDiv.appendChild(todoItem);
+        completedTodosDiv.appendChild(todoDetails);
+      }
+    }
+  });
+}
 // Process form input
 const taskForm = document.getElementById('add-task-form');
 

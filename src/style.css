@@ -118,6 +118,15 @@ main h2 {
   background-color: darkgray;
   border-radius: 5px;
   padding: 0 5px;
+  cursor: pointer;
+}
+.todo-actions .edit-todo {
+  background: #85e734;
+  color: #fff;
+}
+.todo-actions .complete-todo {
+  background: #2d3a23;
+  color: #fff;
 }
 
 .upcoming-todos {
@@ -128,8 +137,10 @@ main h2 {
 .completed-todos {
   height: 40vh;
   background: #f1eeee;
-  /* text-decoration: line-through; */
   padding-left: 10px;
+}
+.todo-completed {
+  text-decoration: line-through;
 }
 
 .todos button,

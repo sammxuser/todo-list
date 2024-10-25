@@ -137,7 +137,6 @@ function refreshMainPage() {
       const projectItem = document.createElement('h3');
       projectItem.textContent = project.name;
       projectsAndTodos.appendChild(projectItem);
-      // const todoList = document.createElement('ul');
       const todoItemDiv = document.createElement('div');
       todoItemDiv.classList.add('todo-item');
 
@@ -155,7 +154,7 @@ function refreshMainPage() {
           todoItemDiv.appendChild(todoItemDescription);
 
           const todoItemBottomDiv = document.createElement('div');
-          todoItemBottomDiv.classList.add('todo-item-bottom');
+          todoItemBottomDiv.classList.add('todo-tem-bottom');
           const itemDueByDiv = document.createElement('div');
           itemDueByDiv.classList.add('item-due-by');
 
@@ -195,6 +194,7 @@ function refreshMainPage() {
           todoActionsDiv.appendChild(itemCompleteButton);
           todoItemBottomDiv.appendChild(todoActionsDiv);
           todoItemDiv.appendChild(todoItemBottomDiv);
+
           // const todoItemDescription = document.createElement('p');
           // todoItemDescription.textContent = project.todos[i]['description'];
           // projectsAndTodos.appendChild(todoItemDescription);

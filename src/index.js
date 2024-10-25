@@ -63,6 +63,20 @@ closeModalBtn.addEventListener('click', () => {
   taskDialog.close();
 });
 
+// Edit todo
+
+const editButton = document.getElementById('editBtn');
+const editTodoDialog = document.getElementById('editTodoDialog');
+const closeEditModalBtn = document.getElementById('closeEditModal');
+
+editButton.addEventListener('click', () => {
+  editTodoDialog.showModal();
+});
+
+closeEditModalBtn.addEventListener('click', () => {
+  editTodoDialog.close();
+});
+
 // projects list on the side bar
 function refreshProjects() {
   // select options for projects
@@ -128,7 +142,7 @@ function refreshMainPage() {
       todoItemDiv.classList.add('todo-item');
 
       for (let i = 0; i < project.todos.length; i++) {
-        //     console.log(i + 1 + '. ' + project.todos[i].title);
+        // console.log(i + 1 + '. ' + project.todos[i].title);
         // const todoItem = document.createElement('li');
         if (project.todos[i]['complete'] === false) {
           //Skip completed todos on the main page
@@ -164,6 +178,9 @@ function refreshMainPage() {
           const itemEditButton = document.createElement('button');
           itemEditButton.classList.add('edit-todo');
           itemEditButton.textContent = 'Edit';
+          itemEditButton.addEventListener('click', () => {
+            handleEditTodo(project.name, project.todos[i]);
+          });
           todoActionsDiv.appendChild(itemEditButton);
 
           const itemCompleteButton = document.createElement('button');
@@ -171,7 +188,7 @@ function refreshMainPage() {
           itemCompleteButton.textContent = 'Mark Completed';
           // Mark todo as completed
           itemCompleteButton.addEventListener('click', () => {
-            handleEdit(project.todos[i]);
+            handleCompleteTodo(project.todos[i]);
             todoItemTitle.classList.add('todo-completed');
             todoItemDescription.classList.add('todo-completed');
           });
@@ -204,13 +221,58 @@ function refreshMainPage() {
 refreshMainPage();
 
 // handle editing a todo task
-function handleEdit(todo) {
-  todo.todoComplete = true;
+function handleCompleteTodo(todo) {
+  todo.complete = true;
   refreshMainPage();
   refreshTodoList();
   refreshCompletedTodos();
   refreshProjects();
 }
+// handle editing a todo task
+function handleEditTodo(projectName, todo) {
+  const todoObject = new Todo(
+    todo.title,
+    todo.description,
+    todo.dueDate,
+    todo.priority
+  );
+
+  const editTodoForm = document.getElementById('edit-todo-form');
+  //editTodoForm['edit-project'].value = projectName; //Bug** need to fix ** Value not populating on the select
+  editTodoForm['todo'].value = todoObject.title;
+  editTodoForm['details'].value = todoObject.description;
+  editTodoForm['duedate'].value = todoObject.dueDate;
+  editTodoForm['priority'].value = todoObject.priority;
+  editTodoDialog.showModal();
+
+  editTodoForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const editFormData = new FormData(this);
+    // const EditedprojectName = editFormData.get('project');
+    const editedTodo = editFormData.get('todo');
+    const editedDetails = editFormData.get('details');
+    const editedDueDate = editFormData.get('duedate');
+    const editedPriority = editFormData.get('priority');
+
+    const editedTodoObject = new Todo(
+      editedTodo,
+      editedDetails,
+      editedDueDate,
+      editedPriority
+    );
+
+    todo.title = editedTodoObject.title;
+    todo.description = editedTodoObject.description;
+    todo.dueDate = editedTodoObject.dueDate;
+    todo.priority = editedTodoObject.priority;
+    refreshMainPage();
+    refreshTodoList();
+    refreshCompletedTodos();
+    refreshProjects();
+    editTodoDialog.close();
+  });
+}
+
 // refresh completed todos
 function refreshCompletedTodos() {
   const completedTodosDiv = document.getElementById('todo-completed');
@@ -243,13 +305,16 @@ taskForm.addEventListener('submit', function (event) {
   const details = formData.get('details');
   const dueDate = formData.get('duedate');
   const priority = formData.get('priority');
+  const createFlag = formData.get('createFlag');
 
   const projectInProjects = findProject(projectName);
 
   const addedTodo = new Todo(todo, details, dueDate, priority);
   if (projectInProjects !== undefined) {
     // if project exists
-    projectInProjects.todos.push(addedTodo);
+    if (createFlag === 'true') {
+      projectInProjects.todos.push(addedTodo);
+    }
   }
 
   // Reset submitted form

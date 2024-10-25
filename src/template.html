@@ -24,7 +24,7 @@
       <main>
         <div class="projects-todos">
           <div id="todaystodos"></div>
-          <!-- <div class="todo-item" id="todo-item">
+          <div class="todo-item" id="todo-item">
             <h3>General Project</h3>
             <h4>Todo 1</h4>
             <p>
@@ -41,11 +41,11 @@
                 <span>Priority <i>1</i></span>
               </div>
               <div class="todo-actions">
-                <button class="edit-todo">Edit</button>
+                <button class="edit-todo" id="editBtn">Edit</button>
                 <button class="complete-todo">Mark Completed</button>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
         <div class="main-right">
           <!-- Upcoming todos : Show maximum of 4 -->
@@ -64,8 +64,8 @@
           <div class="completed-todos">
             <h2>Completed todos</h2>
             <div class="todo-completed" id="todo-completed">
-              <h4>Todo 1</h4>
-              <p>Due by <em>1st Nov 2024</em> <span>View</span></p>
+              <!-- <h4>Todo 1</h4>
+              <p>Due by <em>1st Nov 2024</em> <span>View</span></p> -->
               <!-- 
             <h4>Todo 2</h4>
             <p>Due by <em>1st Nov 2024</em> <span>View</span></p>
@@ -110,8 +110,46 @@
           <input type="number" name="priority" id="priority" min="1" max="3" />
         </div>
         <div class="button-group">
+          <input type="hidden" name="createFlag" value="true" />
           <button value="cancel" formmethod="dialog">Cancel</button>
           <button value="default" id="createBtn">Create</button>
+        </div>
+      </form>
+    </dialog>
+    <!-- Edit a todo modal form -->
+    <dialog id="editTodoDialog">
+      <button value="X" class="closeModal" id="closeEditModal">X</button>
+      <form id="edit-todo-form">
+        <!-- <div class="input-row">
+          <label for="edit-project">Project</label>
+          <select id="edit-project" name="edit-project">
+            <option value="default">Choose ...</option>
+          </select>
+        </div> -->
+        <div class="input-row">
+          <label for="todo">Todo: &nbsp;</label>
+          <input type="text" name="todo" placeholder="todo title" id="todo" />
+        </div>
+        <div class="input-row">
+          <label for="details">Details</label>
+          <textarea
+            name="details"
+            id="details"
+            placeholder="Todo Details"
+          ></textarea>
+        </div>
+        <div class="input-row">
+          <label for="due-date">Due by</label>
+          <input type="date" name="duedate" id="duedate" />
+        </div>
+        <div class="input-row">
+          <label for="priority">Priority</label>
+          <input type="number" name="priority" id="priority" min="1" max="3" />
+        </div>
+        <div class="button-group">
+          <input type="hidden" name="createFlag" value="false" />
+          <button value="cancel" formmethod="dialog">Cancel</button>
+          <button value="default" id="editBtn">Edit</button>
         </div>
       </form>
     </dialog>

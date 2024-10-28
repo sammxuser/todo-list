@@ -2,7 +2,7 @@ import './style.css';
 
 import { Todo } from './todo';
 import { Project } from './project';
-
+import { format } from 'date-fns';
 // const newTodo = new Todo(
 //   'code app',
 //   'continue with the development of todo app',
@@ -64,7 +64,6 @@ closeModalBtn.addEventListener('click', () => {
 });
 
 // Edit todo
-
 const editButton = document.getElementById('editBtn');
 const editTodoDialog = document.getElementById('editTodoDialog');
 const closeEditModalBtn = document.getElementById('closeEditModal');
@@ -76,6 +75,8 @@ editButton.addEventListener('click', () => {
 closeEditModalBtn.addEventListener('click', () => {
   editTodoDialog.close();
 });
+
+const today = format(new Date(), 'yyyyMMdd');
 
 // projects list on the side bar
 function refreshProjects() {
@@ -143,8 +144,11 @@ function refreshMainPage() {
       for (let i = 0; i < project.todos.length; i++) {
         // console.log(i + 1 + '. ' + project.todos[i].title);
         // const todoItem = document.createElement('li');
-        if (project.todos[i]['complete'] === false) {
-          //Skip completed todos on the main page
+        if (
+          project.todos[i]['complete'] === false &&
+          format(project.todos[i]['dueDate'], 'yyyyMMdd') <= today
+        ) {
+          //Skip completed and not due today todos on the main page
           const todoItemTitle = document.createElement('h4');
           todoItemTitle.textContent = project.todos[i]['title'];
           todoItemDiv.appendChild(todoItemTitle);
@@ -217,6 +221,7 @@ function refreshMainPage() {
       }
     }
   });
+  refreshUpcomingTodos();
 }
 refreshMainPage();
 
@@ -227,6 +232,7 @@ function handleCompleteTodo(todo) {
   refreshTodoList();
   refreshCompletedTodos();
   refreshProjects();
+  refreshUpcomingTodos();
 }
 // handle editing a todo task
 function handleEditTodo(projectName, todo) {
@@ -292,6 +298,28 @@ function refreshCompletedTodos() {
     }
   });
 }
+// refresh upcoming todos
+function refreshUpcomingTodos() {
+  console.log('Refreshed upcoming todos');
+
+  const upcomingTodosDiv = document.getElementById('todo-upcoming');
+  // completedTodosDiv.classList.add('todo-');
+  upcomingTodosDiv.textContent = '';
+  allProjects.forEach((project) => {
+    for (let i = 0; i < project.todos.length; i++) {
+      if (format(project.todos[i]['dueDate'], 'yyyyMMdd') > today) {
+        //show only upcoming todos
+        const todoItem = document.createElement('h4');
+        todoItem.textContent = project.todos[i].title;
+        const todoDetails = document.createElement('p');
+        todoDetails.textContent = project.todos[i].description;
+        upcomingTodosDiv.appendChild(todoItem);
+        upcomingTodosDiv.appendChild(todoDetails);
+      }
+    }
+  });
+}
+
 // Process form input
 const taskForm = document.getElementById('add-task-form');
 

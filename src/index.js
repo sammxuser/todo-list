@@ -30,7 +30,7 @@ const defaultProject = new Project('General');
 // programming.addTodo = anotherTodo;
 
 // const allProjects = [defaultProject, programming];
-const allProjects = [defaultProject];
+let allProjects = [defaultProject];
 // const anotherProject = new Project('project 2');
 
 // const todo2 = new Todo(
@@ -49,6 +49,15 @@ const allProjects = [defaultProject];
 //     console.log(i + 1 + '. ' + project.todos[i].title);
 //   }
 // });
+
+// save objects in localStorage
+if (!localStorage.getItem('allProjects')) {
+  populateLocalStorage();
+} else {
+  allProjects = JSON.parse(localStorage.getItem('allProjects'));
+  console.log('Projects in Storage');
+  console.log(allProjects);
+}
 
 // Modal
 const taskButton = document.getElementById('showDialog');
@@ -289,6 +298,7 @@ function handleEditTodo(todo) {
     refreshProjects();
     editTodoDialog.close();
     refreshUpcomingTodos();
+    populateLocalStorage();
   });
 }
 
@@ -335,7 +345,7 @@ function refreshUpcomingTodos() {
 
         const itemEditSpan = document.createElement('span');
         const itemEditButton = document.createElement('button');
-        itemEditButton.classList.add('edit-todo');
+        itemEditButton.classList.add('edit-upcoming-todo');
         itemEditButton.textContent = 'Edit';
         itemEditButton.addEventListener('click', () => {
           handleEditTodo(project.todos[i]);
@@ -372,6 +382,7 @@ taskForm.addEventListener('submit', function (event) {
     // if project exists
     if (createFlag === 'true') {
       projectInProjects.todos.push(addedTodo);
+      populateLocalStorage();
     }
   }
 
@@ -426,4 +437,9 @@ function handleDeleteTodo(projectName, todo) {
   refreshCompletedTodos();
   refreshProjects();
   refreshUpcomingTodos();
+}
+
+function populateLocalStorage() {
+  localStorage.setItem('allProjects', JSON.stringify(allProjects));
+  console.log(JSON.parse(localStorage.getItem('allProjects')));
 }

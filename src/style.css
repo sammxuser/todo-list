@@ -125,6 +125,14 @@ main h2 {
   background: #85e734;
   color: #fff;
 }
+.edit-upcoming-todo {
+  border: none;
+  outline: none;
+  color: white;
+  background-color: darkgray;
+  border-radius: 4px;
+  margin-left: 5px;
+}
 .todo-actions .delete-todo {
   background: #e74c3c;
   color: #fff;

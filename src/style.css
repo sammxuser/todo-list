@@ -125,6 +125,10 @@ main h2 {
   background: #85e734;
   color: #fff;
 }
+.todo-actions .delete-todo {
+  background: #e74c3c;
+  color: #fff;
+}
 .todo-actions .complete-todo {
   background: #2d3a23;
   color: #fff;

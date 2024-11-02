@@ -111,9 +111,8 @@ function refreshTodoList() {
   todoList.textContent = '';
   allProjects.forEach((project) => {
     for (let i = 0; i < project.todos.length; i++) {
-      const todoItem = document.createElement('li');
       if (project.todos[i].complete === false) {
-        //skip completed todos
+        const todoItem = document.createElement('li');
         todoItem.textContent = project.todos[i].title;
         todoList.appendChild(todoItem);
       }
@@ -140,7 +139,6 @@ function refreshMainPage() {
       projectsAndTodos.appendChild(projectItem);
       const todoItemDiv = document.createElement('div');
       todoItemDiv.classList.add('todo-item');
-
       for (let i = 0; i < project.todos.length; i++) {
         // console.log(i + 1 + '. ' + project.todos[i].title);
         // const todoItem = document.createElement('li');
@@ -182,9 +180,23 @@ function refreshMainPage() {
           itemEditButton.classList.add('edit-todo');
           itemEditButton.textContent = 'Edit';
           itemEditButton.addEventListener('click', () => {
-            handleEditTodo(project.name, project.todos[i]);
+            handleEditTodo(project.todos[i]);
           });
           todoActionsDiv.appendChild(itemEditButton);
+
+          const itemDeleteButton = document.createElement('button');
+          itemDeleteButton.classList.add('delete-todo');
+          itemDeleteButton.textContent = 'Delete';
+          itemDeleteButton.addEventListener('click', () => {
+            if (
+              confirm(
+                `Are you sure you want to delete "${project.todos[i]['title']}" ?`
+              )
+            ) {
+              handleDeleteTodo(project.name, project.todos[i]);
+            }
+          });
+          todoActionsDiv.appendChild(itemDeleteButton);
 
           const itemCompleteButton = document.createElement('button');
           itemCompleteButton.classList.add('complete-todo');
@@ -235,7 +247,7 @@ function handleCompleteTodo(todo) {
   refreshUpcomingTodos();
 }
 // handle editing a todo task
-function handleEditTodo(projectName, todo) {
+function handleEditTodo(todo) {
   const todoObject = new Todo(
     todo.title,
     todo.description,
@@ -276,6 +288,7 @@ function handleEditTodo(projectName, todo) {
     refreshCompletedTodos();
     refreshProjects();
     editTodoDialog.close();
+    refreshUpcomingTodos();
   });
 }
 
@@ -300,8 +313,6 @@ function refreshCompletedTodos() {
 }
 // refresh upcoming todos
 function refreshUpcomingTodos() {
-  console.log('Refreshed upcoming todos');
-
   const upcomingTodosDiv = document.getElementById('todo-upcoming');
   // completedTodosDiv.classList.add('todo-');
   upcomingTodosDiv.textContent = '';
@@ -313,6 +324,25 @@ function refreshUpcomingTodos() {
         todoItem.textContent = project.todos[i].title;
         const todoDetails = document.createElement('p');
         todoDetails.textContent = project.todos[i].description;
+        const dueBySpan = document.createElement('span');
+        const breakParagraph = document.createElement('br');
+        todoDetails.appendChild(breakParagraph);
+        dueBySpan.textContent = ` Due by ${format(
+          project.todos[i].dueDate,
+          'dd-MM-yyyy'
+        )}`;
+        todoDetails.appendChild(dueBySpan);
+
+        const itemEditSpan = document.createElement('span');
+        const itemEditButton = document.createElement('button');
+        itemEditButton.classList.add('edit-todo');
+        itemEditButton.textContent = 'Edit';
+        itemEditButton.addEventListener('click', () => {
+          handleEditTodo(project.todos[i]);
+        });
+        itemEditSpan.appendChild(itemEditButton);
+        todoDetails.appendChild(itemEditSpan);
+
         upcomingTodosDiv.appendChild(todoItem);
         upcomingTodosDiv.appendChild(todoDetails);
       }
@@ -384,3 +414,16 @@ newProjectBtn.addEventListener('click', () => {
 closeProjectModal.addEventListener('click', () => {
   projectDialog.close();
 });
+function handleDeleteTodo(projectName, todo) {
+  const projectInProjects = findProject(projectName);
+  if (projectInProjects !== undefined) {
+    projectInProjects.todos = projectInProjects.todos.filter(
+      (item) => item !== todo
+    );
+  }
+  refreshMainPage();
+  refreshTodoList();
+  refreshCompletedTodos();
+  refreshProjects();
+  refreshUpcomingTodos();
+}

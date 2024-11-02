@@ -55,8 +55,6 @@ if (!localStorage.getItem('allProjects')) {
   populateLocalStorage();
 } else {
   allProjects = JSON.parse(localStorage.getItem('allProjects'));
-  console.log('Projects in Storage');
-  console.log(allProjects);
 }
 
 // Modal
@@ -151,10 +149,8 @@ function refreshMainPage() {
       for (let i = 0; i < project.todos.length; i++) {
         // console.log(i + 1 + '. ' + project.todos[i].title);
         // const todoItem = document.createElement('li');
-        if (
-          project.todos[i]['complete'] === false &&
-          format(project.todos[i]['dueDate'], 'yyyyMMdd') <= today
-        ) {
+        let tempDueDate = format(project.todos[i]['dueDate'], 'yyyyMMdd');
+        if (project.todos[i]['complete'] === false && tempDueDate <= today) {
           //Skip completed and not due today todos on the main page
           const todoItemTitle = document.createElement('h4');
           todoItemTitle.textContent = project.todos[i]['title'];
@@ -170,7 +166,10 @@ function refreshMainPage() {
           itemDueByDiv.classList.add('item-due-by');
 
           const itemDueBySpanText = document.createElement('span');
-          itemDueBySpanText.textContent = `Due by ${project.todos[i]['dueDate']}`;
+          itemDueBySpanText.textContent = `Due by ${format(
+            project.todos[i]['dueDate'],
+            'dd-MM-yyyy'
+          )}`;
           itemDueByDiv.appendChild(itemDueBySpanText);
           todoItemBottomDiv.appendChild(itemDueByDiv);
 
@@ -254,6 +253,7 @@ function handleCompleteTodo(todo) {
   refreshCompletedTodos();
   refreshProjects();
   refreshUpcomingTodos();
+  populateLocalStorage();
 }
 // handle editing a todo task
 function handleEditTodo(todo) {
@@ -321,6 +321,7 @@ function refreshCompletedTodos() {
     }
   });
 }
+refreshCompletedTodos();
 // refresh upcoming todos
 function refreshUpcomingTodos() {
   const upcomingTodosDiv = document.getElementById('todo-upcoming');
@@ -441,5 +442,4 @@ function handleDeleteTodo(projectName, todo) {
 
 function populateLocalStorage() {
   localStorage.setItem('allProjects', JSON.stringify(allProjects));
-  console.log(JSON.parse(localStorage.getItem('allProjects')));
 }

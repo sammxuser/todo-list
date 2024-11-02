@@ -104,6 +104,7 @@ main h2 {
   background: #dceccf;
   padding: 5px;
   margin: 5px;
+  border-radius: 3px;
 }
 
 .todo-item-bottom {
@@ -146,11 +147,13 @@ main h2 {
   height: 42vh;
   background: #ececeb;
   padding-left: 10px;
+  border-radius: 3px;
 }
 .completed-todos {
-  height: 40vh;
+  height: 100%;
   background: #f1eeee;
   padding-left: 10px;
+  border-radius: 3px;
 }
 .todo-completed {
   text-decoration: line-through;
